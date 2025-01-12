@@ -24,14 +24,14 @@ The actions to use the API are in a postman collection, I have attached an expor
 This is a list of improvement I would make to the consultation API if I had more time. I have also dotted the code 
 with TODO's. 
 ### Adding support for multiple choices to be selected for an answer
-Currently, on single answers are support (i.e. you get multiple answers to choice from, but you can only choose one.)
+Currently, only single answers are support (i.e. you get multiple answers to choice from, but you can only choose one.)
 ### The tight coupling between database entities
 #### Question and Answer separation
 Currently, the Question class also contains the answers this is leading to a tight coupling. It would be improved if 
 the Question and Answer were separate entities, and another table represented the combination. This would allow for 
 a question to have multiple different answers/valid answers depending on the context.
 #### Consultation and Question separation
-Currently, the Question class have a consultationId linking to the consultation to the question is for. This would 
+Currently, the Question class has a consultationId linking to the consultation to the question is for. This would 
 be better if there was a separate table that combined the consultationId and the questionId. This would allow for a 
 single question to be associated with multiple consultations. 
 ### Enrich the objects returned from the API
