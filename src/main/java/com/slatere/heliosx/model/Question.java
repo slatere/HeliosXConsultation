@@ -12,6 +12,7 @@ public class Question {
 
     private UUID id;
 
+    // TODO would be good if consultation and question were separated.
     @NotNull
     @ConsultationIdConstraint
     private UUID consultationId;
@@ -19,6 +20,7 @@ public class Question {
     @NotNull
     private String text;
 
+    // TODO would be much better if answers were separated out into more tables.
     private List<String> answers;
 
     private List<String> validAnswers;

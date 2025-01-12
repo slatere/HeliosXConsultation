@@ -42,7 +42,7 @@ public class QuestionConstraintValidator implements ConstraintValidator<Question
                 }
             default:
                 createErrorMessage(constraintValidatorContext, question,
-                        String.format("The QuestionEnumType is incorrect %", question.getQuestionType()));
+                        String.format("The QuestionEnumType is incorrect %s\n", question.getQuestionType()));
                 return false;
         }
     }
@@ -52,7 +52,7 @@ public class QuestionConstraintValidator implements ConstraintValidator<Question
             for (String validAnswer : question.getValidAnswers()) {
                 if (!question.getAnswers().contains(validAnswer)) {
                     createErrorMessage(constraintValidatorContext, question,
-                            String.format("Valid answers: %s not in answer", validAnswer));
+                            String.format("Valid answers: %s not in answer\n", validAnswer));
                     return false;
                 }
             }
@@ -62,6 +62,7 @@ public class QuestionConstraintValidator implements ConstraintValidator<Question
 
     @Override
     public boolean isValid(Question question, ConstraintValidatorContext constraintValidatorContext) {
+        constraintValidatorContext.disableDefaultConstraintViolation();
         if (checkQuestionTypeAndAnswer(question, constraintValidatorContext)) {
             return checkValidAnswer(question, constraintValidatorContext);
         }

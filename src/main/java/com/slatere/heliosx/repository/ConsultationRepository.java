@@ -17,6 +17,13 @@ public class ConsultationRepository {
     @PostConstruct
     public void setUp() {
         consultationList = new ArrayList<>();
+        Consultation consultation = new Consultation(
+                UUID.fromString("c2c9881e-f6ce-46b4-8977-8108399e0866"),
+                UUID.fromString("fcd379f2-f41a-4d29-a673-53bf12bcc323"),
+                "Genovian Pear allergy treatment",
+                "Consultation to determine if customer is suitable candidate for Genovian Pear allergy medication."
+        );
+        consultationList.add(consultation);
     }
 
 

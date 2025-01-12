@@ -13,7 +13,7 @@ public interface ConsultationAnswerService {
 
     public List<ConsultationAnswer> getByConsultationId(UUID consultationId);
 
-    public List<ConsultationAnswer> createConsultationAnswers(List<ConsultationAnswer> consultationAnswers);
+    public List<ConsultationAnswer> saveConsultationAnswers(List<ConsultationAnswer> consultationAnswers);
 
     public List<ConsultationAnswer> getAll();
 

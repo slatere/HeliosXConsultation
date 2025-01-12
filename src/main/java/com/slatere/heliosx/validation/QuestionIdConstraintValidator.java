@@ -1,6 +1,5 @@
 package com.slatere.heliosx.validation;
 
-import com.slatere.heliosx.service.ConsultationService;
 import com.slatere.heliosx.service.QuestionService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -19,10 +18,11 @@ public class QuestionIdConstraintValidator implements ConstraintValidator<Questi
 
     @Override
     public boolean isValid(UUID uuid, ConstraintValidatorContext constraintValidatorContext) {
-        boolean isValid = questionService.getQuestionById(uuid).isPresent();
+        constraintValidatorContext.disableDefaultConstraintViolation();
+        boolean isValid = questionService.findById(uuid).isPresent();
         if (!isValid) {
-            constraintValidatorContext.buildConstraintViolationWithTemplate(String.format(
-                    String.format("questionId: %s invalid", uuid))).addConstraintViolation();
+            constraintValidatorContext.buildConstraintViolationWithTemplate(
+                    String.format("questionId: %s invalid", uuid)).addConstraintViolation();
         }
         return isValid;
     }

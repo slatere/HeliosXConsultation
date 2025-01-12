@@ -9,15 +9,15 @@ import java.util.UUID;
 
 public interface QuestionService {
 
-    public Question createQuestion(Question question);
+    public Question save(Question question);
 
-    public Optional<Question> getQuestionById(UUID questionId);
+    public Optional<Question> findById(UUID questionId);
 
-    public List<Question> getByConsultationId(UUID consultationId);
+    public List<Question> findByConsultationId(UUID consultationId);
 
-    public void deleteQuestion(Question question);
+    public void delete(Question question);
 
-    public List<Question> createQuestions(List<Question> question);
+    public List<Question> saveQuestions(List<Question> question);
 
     public List<Question> getAll();
 }

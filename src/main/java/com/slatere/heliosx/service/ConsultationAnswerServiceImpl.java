@@ -35,7 +35,7 @@ public class ConsultationAnswerServiceImpl implements ConsultationAnswerService 
     }
 
     @Override
-    public List<ConsultationAnswer> createConsultationAnswers(List<ConsultationAnswer> consultationAnswers) {
+    public List<ConsultationAnswer> saveConsultationAnswers(List<ConsultationAnswer> consultationAnswers) {
         UUID userId = UUID.randomUUID();
         List<ConsultationAnswer> newConsultationAnswers = new ArrayList<>();
         for (ConsultationAnswer consultationAnswer: consultationAnswers) {

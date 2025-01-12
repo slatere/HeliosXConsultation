@@ -1,6 +1,8 @@
 package com.slatere.heliosx.handler;
 
+import com.slatere.heliosx.exception.ConsultationNotFoundException;
 import com.slatere.heliosx.exception.ConsultationServiceException;
+import com.slatere.heliosx.response.ConsultationNotFoundResponse;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
@@ -8,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.time.Instant;
 import java.util.Set;
 
 @ControllerAdvice
@@ -32,8 +35,16 @@ public class ConsultationExceptionHandler {
         return new ResponseEntity<>(consultationServiceException, HttpStatus.BAD_REQUEST);
     }
 
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity handle(Exception exception) {
-//        return new ResponseEntity<>(exception, HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
+    @ExceptionHandler(ConsultationNotFoundException.class)
+    public ResponseEntity handle(ConsultationNotFoundException consultationNotFoundException) {
+        ConsultationNotFoundResponse consultationNotFoundResponse = new ConsultationNotFoundResponse(
+                HttpStatus.NOT_FOUND.value(), Instant.now().toEpochMilli(), consultationNotFoundException.getMessage()
+        );
+        return new ResponseEntity(consultationNotFoundResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity handle(Exception exception) {
+        return new ResponseEntity<>(exception, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

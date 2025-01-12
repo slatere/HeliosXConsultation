@@ -21,22 +21,22 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Question createQuestion(Question question) {
+    public Question save(Question question) {
         return questionRepository.save(new Question(UUID.randomUUID(), question));
     }
 
     @Override
-    public Optional<Question> getQuestionById(UUID questionId) {
+    public Optional<Question> findById(UUID questionId) {
         return questionRepository.findById(questionId);
     }
 
     @Override
-    public List<Question> getByConsultationId(UUID consultationId) {
+    public List<Question> findByConsultationId(UUID consultationId) {
         return questionRepository.findByConsultationId(consultationId);
     }
 
     @Override
-    public void deleteQuestion(Question question) {
+    public void delete(Question question) {
         questionRepository.delete(question);
     }
 
@@ -46,10 +46,10 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<Question> createQuestions(List<Question> questionList) {
+    public List<Question> saveQuestions(List<Question> questionList) {
         List<Question> newQuestionList = new ArrayList<>();
         for (Question question: questionList) {
-            newQuestionList.add(createQuestion(question));
+            newQuestionList.add(save(question));
         }
         return newQuestionList;
     }

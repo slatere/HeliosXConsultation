@@ -25,7 +25,8 @@ public class ConsultationAnswerConstraintValidator implements ConstraintValidato
 
     @Override
     public boolean isValid(ConsultationAnswer consultationAnswer, ConstraintValidatorContext constraintValidatorContext) {
-        Optional<Question> optionalQuestion = questionService.getQuestionById(consultationAnswer.getQuestionId());
+        constraintValidatorContext.disableDefaultConstraintViolation();
+        Optional<Question> optionalQuestion = questionService.findById(consultationAnswer.getQuestionId());
         if (optionalQuestion.isPresent()) {
             Question question = optionalQuestion.get();
             if (question.getQuestionType() == QuestionTypeEnum.STRING ||
@@ -38,12 +39,11 @@ public class ConsultationAnswerConstraintValidator implements ConstraintValidato
             }
         }
 
-        boolean unique = consultationAnswerService.checkCombinationOfConsultationAndQuestionIdUnique(consultationAnswer);
-        if (unique) {
+        if (consultationAnswerService.checkCombinationOfConsultationAndQuestionIdUnique(consultationAnswer)) {
             return true;
         } else {
             constraintValidatorContext.buildConstraintViolationWithTemplate(String.format(
-                    "The combination of consultationId %d and questionId are not unique",
+                    "The combination of consultationId %s and questionId %s are not unique",
                     consultationAnswer.getConsultationId(), consultationAnswer.getQuestionId())).addConstraintViolation();
         }
         return false;

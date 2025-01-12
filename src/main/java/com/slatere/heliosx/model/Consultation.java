@@ -8,6 +8,7 @@ public class Consultation {
 
     private UUID id;
 
+    // TODO this should be a foreign key into a table
     @NotNull(message = "Must have a medicationId")
     private UUID medicationId;
 

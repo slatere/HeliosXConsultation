@@ -3,7 +3,7 @@ package com.slatere.heliosx.controller;
 import com.slatere.heliosx.model.Consultation;
 import com.slatere.heliosx.model.ConsultationAnswer;
 import com.slatere.heliosx.model.Question;
-import com.slatere.heliosx.response.UserPerscribeResponse;
+import com.slatere.heliosx.response.UserPrescribeResponse;
 import com.slatere.heliosx.service.ConsultationAnswerService;
 import com.slatere.heliosx.service.ConsultationService;
 import com.slatere.heliosx.service.QuestionService;
@@ -34,10 +34,17 @@ public class ConsultationController {
         this.questionService = questionService;
     }
 
+    // TODO add endpoint to create a single consultation.
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/consultations")
     public List<Consultation> createConsultation(@RequestBody List<@Valid Consultation> consultations) {
-        return consultationService.createConsultations(consultations);
+        return consultationService.saveConsultations(consultations);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/consultation/{consultation_id}")
+    public Consultation getConsultation(@PathVariable UUID consultation_id) {
+        return consultationService.findById(consultation_id);
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -52,10 +59,19 @@ public class ConsultationController {
         return consultationAnswerService.getAll();
     }
 
+    // TODO at the moment this only returns the list of ConsultationAnswer.
+    //  It would be much more readable/improved if the question text was return.
+    // TODO would be good to add another endpoint that you can also get by userId.
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/consultation/{consultation_id}/consultation-answers")
+    public List<ConsultationAnswer> getConsultationAnswersByConsultationId(@PathVariable UUID consultation_id) {
+        return consultationAnswerService.getByConsultationId(consultation_id);
+    }
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/consultation/consultation-answers")
-    public UserPerscribeResponse createAnswersToConsultation(@RequestBody List<@Valid ConsultationAnswer> consultationAnswers) {
-        List<ConsultationAnswer> answers = consultationAnswerService.createConsultationAnswers(consultationAnswers);
+    public UserPrescribeResponse createAnswersToConsultation(@RequestBody List<@Valid ConsultationAnswer> consultationAnswers) {
+        List<ConsultationAnswer> answers = consultationAnswerService.saveConsultationAnswers(consultationAnswers);
         return consultationService.areLikelyToPrescribe(answers);
     }
 
@@ -63,9 +79,10 @@ public class ConsultationController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/consultation/questions")
     public List<Question> createQuestions(@RequestBody List<@Valid Question> questions) {
-        return questionService.createQuestions(questions);
+        return questionService.saveQuestions(questions);
     }
 
+    // TODO add endpoint for getting a single question
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/consultation/questions")
     public List<Question> getQuestions() {
@@ -75,6 +92,6 @@ public class ConsultationController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/consultation/{consultation_id}/questions")
     public List<Question> getQuestionsByConsultationId(@PathVariable UUID consultation_id) {
-        return questionService.getByConsultationId(consultation_id);
+        return questionService.findByConsultationId(consultation_id);
     }
 }
