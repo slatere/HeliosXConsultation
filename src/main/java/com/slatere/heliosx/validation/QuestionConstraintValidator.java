@@ -16,6 +16,7 @@ public class QuestionConstraintValidator implements ConstraintValidator<Question
                 question.getId(), additionalMessage)).addConstraintViolation();
     }
 
+    // TODO: refactor with the factory pattern.
     public boolean checkQuestionTypeAndAnswer(Question question, ConstraintValidatorContext constraintValidatorContext) {
         List<String> answers = question.getAnswers();
         List<String> validAnswers = question.getValidAnswers();

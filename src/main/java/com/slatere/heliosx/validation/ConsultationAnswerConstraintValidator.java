@@ -23,6 +23,7 @@ public class ConsultationAnswerConstraintValidator implements ConstraintValidato
         this.consultationAnswerService = consultationAnswerService;
     }
 
+    // TODO - refactor out with the factory pattern.
     @Override
     public boolean isValid(ConsultationAnswer consultationAnswer, ConstraintValidatorContext constraintValidatorContext) {
         constraintValidatorContext.disableDefaultConstraintViolation();

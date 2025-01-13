@@ -22,7 +22,9 @@ The actions to use the API are in a postman collection, I have attached an expor
 
 ## Improvements
 This is a list of improvement I would make to the consultation API if I had more time. I have also dotted the code 
-with TODO's. 
+with TODO's. Currently, the DB objects and the interface of the API are very similar, this currently has very tight 
+coupling. Would be much improve if they were different and the service layer applied more business logic. But for 
+time and efficiency I designed it this way.
 ### Adding support for multiple choices to be selected for an answer
 Currently, only single answers are support (i.e. you get multiple answers to choice from, but you can only choose one.)
 ### The tight coupling between database entities
@@ -34,6 +36,9 @@ a question to have multiple different answers/valid answers depending on the con
 Currently, the Question class has a consultationId linking to the consultation to the question is for. This would 
 be better if there was a separate table that combined the consultationId and the questionId. This would allow for a 
 single question to be associated with multiple consultations. 
+#### Improve compliance with SOLID principles
+Anywhere that I'm currently using an if on the QuestionTypeEnum could be improved by being refactored with the 
+Factory pattern. This would help comply witht he Open-Closed principle and Single responsibility principle. 
 ### Enrich the objects returned from the API
 The objects returned from the API could be more enriched. An example of this is getting the ConsultationAnswers. 
 Currently it only returns the questionId. It would be much better if it could return information on the question.
